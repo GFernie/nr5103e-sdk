@@ -1,0 +1,6 @@
+#! /bin/sh
+set -ex
+ruff check
+ruff format --diff
+mypy .
+pytest

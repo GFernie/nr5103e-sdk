@@ -1,0 +1,41 @@
+[project]
+name = "nr5103e-sdk"
+version = "0.1.0"
+description = "SDK for interacting with the Zyxel NR5103E router."
+readme = "README.md"
+authors = [
+    { name = "Gary Fernie", email = "g@ryfernie.me" }
+]
+requires-python = ">=3.13"
+dependencies = [
+    "requests>=2.32.3",
+]
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[dependency-groups]
+dev = [
+    "mypy>=1.15.0",
+    "pytest>=8.3.5",
+    "ruff>=0.11.6",
+    "types-requests>=2.32.0.20250328",
+]
+
+[tool.pytest.ini_options]
+log_cli = true
+log_cli_level = "DEBUG"
+
+[tool.ruff.lint]
+select = ["ALL"]
+ignore = [
+    "COM812",
+    "D203",
+    "D213",
+    "FIX",
+    "TD",
+]
+
+[tool.ruff.lint.per-file-ignores]
+"tests/*.py" = ["ANN201", "D100", "D103", "D104", "S101"]
