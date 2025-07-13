@@ -14,10 +14,16 @@ pip install .
 
 ```python
 from nr5103e_sdk.client import Client
+import asyncio
 
-with Client("admin_password") as client:
-    status = client.cellwan_status()
-    print(f"Cell ID: {status['INTF_Cell_ID']")
+
+async def main() -> None:
+    async with Client("admin_password") as client:
+        status = await client.cellwan_status()
+        print(f"Cell ID: {status['INTF_Cell_ID']}")
+
+
+asyncio.run(main())
 ```
 
 ## Contributing
