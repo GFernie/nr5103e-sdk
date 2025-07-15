@@ -7,6 +7,7 @@ This repository is a Python SDK for interacting with Zyxel NR5103E routers.
 - Source files live under `src/` and tests under `tests/`.
 - Run `bin/format` to apply ruff autoformatting.
 - Run `bin/test` after changes. It performs ruff linting, checks formatting, runs mypy and pytest.
+- Update dependencies with `uv sync`; never edit `uv.lock` manually.
 
 Always run both commands before committing code.
 
