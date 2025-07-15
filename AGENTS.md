@@ -19,5 +19,5 @@ Create a virtual environment and install the SDK in editable mode with its
 ```sh
 python -m venv .venv
 source .venv/bin/activate
-pip install -e .[dev]
+python -m pip install -e . --group dev
 ```
