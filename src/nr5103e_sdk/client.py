@@ -2,12 +2,11 @@
 
 import logging
 from base64 import b64encode
-from functools import cached_property
 from types import TracebackType
 from typing import Self
 from urllib.parse import urljoin
 
-import requests
+import aiohttp
 
 DEFAULT_HOST = "https://192.168.1.1"
 DEFAULT_USERNAME = "admin"
@@ -52,31 +51,38 @@ class Client:
                 self.username, self.password, self.host = args
         self.verify = verify
         self.timeout = 1
+        self._session: aiohttp.ClientSession | None = None
 
-    def __enter__(self) -> Self:
-        """Do nothing."""
+    async def __aenter__(self) -> Self:
+        """Open aiohttp session."""
+        timeout = aiohttp.ClientTimeout(total=self.timeout)
+        connector = aiohttp.TCPConnector(
+            ssl=self.verify if self.verify is not None else True
+        )
+        self._session = aiohttp.ClientSession(timeout=timeout, connector=connector)
         return self
 
-    def __exit__(
+    async def __aexit__(
         self,
         exc_type: type[BaseException] | None,
         exc_value: BaseException | None,
         traceback: TracebackType | None,
     ) -> bool | None:
         """Close and delete session from instance cache."""
-        if "session" in self.__dict__:
-            self.session.close()
-            del self.__dict__["session"]
+        if self._session is not None:
+            await self._session.close()
+            self._session = None
         return None
 
-    @cached_property
-    def session(self) -> requests.Session:
-        """Lazy requests session."""
-        session = requests.Session()
-        session.verify = self.verify
-        return session
+    @property
+    def session(self) -> aiohttp.ClientSession:
+        """Return the current session."""
+        if self._session is None:
+            msg = "Client session not initialized"
+            raise RuntimeError(msg)
+        return self._session
 
-    def user_login(self) -> None:
+    async def user_login(self) -> None:
         """Log in for session."""
         url = urljoin(self.host, "UserLogin")
         encoded_password = b64encode(self.password.encode()).decode()
@@ -87,24 +93,29 @@ class Client:
             "SHA512_password": False,
         }
         log.debug("Send request to URL %s\nRequest Body: %s", url, body)
-        response = self.session.post(url, json=body, timeout=self.timeout)
-        if not response.ok:
-            log.warning(
-                "Unexpected response for URL %s\nStatus Code: %s\nResponse Body: %s",
-                url,
-                response.status_code,
-                response.text,
-            )
+        async with self.session.post(url, json=body) as response:
+            if not response.ok:
+                body_text = await response.text()
+                log.warning(
+                    (
+                        "Unexpected response for URL %s\n"
+                        "Status Code: %s\nResponse Body: %s"
+                    ),
+                    url,
+                    response.status,
+                    body_text,
+                )
 
-    def user_login_check(self) -> bool:
+    async def user_login_check(self) -> bool:
         """Check if login is valid."""
         url = urljoin(self.host, "cgi-bin/UserLoginCheck")
-        response = self.session.get(url, timeout=self.timeout)
-        log.info("Login status: %s", response.status_code)
-        return response.ok
+        async with self.session.get(url) as response:
+            log.info("Login status: %s", response.status)
+            return response.ok
 
-    def cellwan_status(self) -> dict:
+    async def cellwan_status(self) -> dict:
         """Get info about cell interface status."""
         url = urljoin(self.host, "cgi-bin/DAL?oid=cellwan_status")
-        response = self.session.get(url, timeout=self.timeout)
-        return response.json()["Object"][0]
+        async with self.session.get(url) as response:
+            data = await response.json()
+            return data["Object"][0]
