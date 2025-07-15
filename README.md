@@ -7,7 +7,7 @@ A Python SDK for interacting with NR5103E routers. It handles login, sessions, a
 ### Installation
 
 ```sh
-pip install .
+pip install nr5103e-sdk
 ```
 
 ### Usage Example
@@ -20,16 +20,3 @@ with Client("admin_password") as client:
     print(f"Cell ID: {status['INTF_Cell_ID']")
 ```
 
-## Contributing
-
-### Run Tests
-
-```sh
-bin/test
-```
-
-### Format Code
-
-```sh
-bin/format
-```
