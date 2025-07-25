@@ -1,0 +1,24 @@
+name: CoPilot Setup Steps
+description: Development environment setup for nr5103e-sdk
+
+steps:
+  - name: Install uv
+    description: Install uv package manager for dependency management
+    run: |
+      pip install uv
+
+  - name: Install dependencies
+    description: Install project dependencies and development tools
+    run: |
+      uv sync
+
+  - name: Run tests
+    description: Execute the full test suite including linting, formatting, type checking, and unit tests
+    run: |
+      uv run bin/test
+
+environment:
+  python_version_file: ".python-version"
+  package_manager: "uv"
+  test_command: "uv run bin/test"
+  format_command: "uv run bin/format"
