@@ -44,6 +44,13 @@ uv run bin/test
 - **Be transparent** about challenges, changes in approach, or additional scope discovered
 - **Use checklists effectively** - they help track progress and communicate status clearly
 
+## Development Principles
+
+- Make the minimal amount of changes to complete the task fully, without adding unnecessary complications or premature optimisations.
+- Simple is better than complex.
+- Only add comments when the code is not idiomatic. The first preference should always be writing code which is self explanatory without comments.
+- Tests should test intended functionality rather than just testing the specifics of the implementation. Tests should not require updates when making trivial changes to logic, only when new features are added or behaviours change in a way that we want to test for regressions in the future.
+
 ## Code Style and Conventions
 
 ### File Formatting
