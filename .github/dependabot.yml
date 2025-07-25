@@ -1,17 +1,10 @@
 version: 2
 updates:
-  # Enable version updates for Python dependencies
-  - package-ecosystem: "pip"
+  - package-ecosystem: "uv"
     schedule:
       interval: "weekly"
-    commit-message:
-      prefix: "deps"
-      prefix-development: "deps-dev"
     open-pull-requests-limit: 10
 
-  # Enable version updates for GitHub Actions
   - package-ecosystem: "github-actions"
     schedule:
       interval: "weekly"
-    commit-message:
-      prefix: "ci"
