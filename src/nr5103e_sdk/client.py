@@ -23,7 +23,7 @@ class Client:
         username: str = DEFAULT_USERNAME,
         password: str | None = None,
         host: str = DEFAULT_HOST,
-        verify: bool | None = True,
+        verify: bool = True,
     ) -> None:
         """Initialise client with some common defaults.
 
@@ -73,8 +73,7 @@ class Client:
     def session(self) -> aiohttp.ClientSession:
         """Lazy aiohttp session."""
         if self._session is None:
-            verify_ssl = self.verify if self.verify is not None else True
-            connector = aiohttp.TCPConnector(verify_ssl=verify_ssl)
+            connector = aiohttp.TCPConnector(verify_ssl=self.verify)
             timeout = aiohttp.ClientTimeout(total=self.timeout)
             self._session = aiohttp.ClientSession(
                 connector=connector,
