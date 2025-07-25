@@ -2,7 +2,6 @@ version: 2
 updates:
   # Enable version updates for Python dependencies
   - package-ecosystem: "pip"
-    directory: "/"
     schedule:
       interval: "weekly"
     commit-message:
@@ -12,9 +11,7 @@ updates:
 
   # Enable version updates for GitHub Actions
   - package-ecosystem: "github-actions"
-    directory: "/"
     schedule:
       interval: "weekly"
     commit-message:
       prefix: "ci"
-    open-pull-requests-limit: 5
