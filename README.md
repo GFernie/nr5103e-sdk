@@ -22,7 +22,6 @@ async def main():
         status = await client.cellwan_status()
         print(f"Cell ID: {status['INTF_Cell_ID']}")
 
-# Run the async function
 asyncio.run(main())
 ```
 

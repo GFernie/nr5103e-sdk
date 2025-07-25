@@ -1,7 +1,8 @@
+import base64
 import inspect
-import json
 from unittest.mock import patch
 
+import aiohttp
 import aioresponses
 import pytest
 from aiohttp import ClientError
@@ -21,6 +22,8 @@ async def test_client_session_lazy():
     """Test that session is created lazily."""
     client = Client("password")
     async with client:
+        # Verify session is None before accessing
+        assert client._session is None  # noqa: SLF001
         # Access session through public property to ensure lazy initialisation works
         session = client.session
         assert session is not None
@@ -28,10 +31,9 @@ async def test_client_session_lazy():
 
 @pytest.mark.asyncio
 async def test_async_methods_are_coroutines():
-    """Test that all the main methods are now async coroutines."""
+    """Test that all the main methods are async coroutines."""
     client = Client("password")
     async with client:
-        # Check that the methods are coroutine functions
         assert inspect.iscoroutinefunction(client.user_login)
         assert inspect.iscoroutinefunction(client.user_login_check)
         assert inspect.iscoroutinefunction(client.cellwan_status)
@@ -64,8 +66,6 @@ async def test_user_login_success():
         assert request_data["currLang"] == "en"
         assert request_data["SHA512_password"] is False
         # Password should be base64 encoded
-        import base64
-
         expected_password = base64.b64encode(b"test_password").decode()
         assert request_data["Input_Passwd"] == expected_password
 
@@ -129,8 +129,6 @@ async def test_cellwan_status_success():
         async with Client("password") as client:
             result = await client.cellwan_status()
             assert result == expected_data["Object"][0]
-            assert result["INTF_Cell_ID"] == "12345"
-            assert result["INTF_RSRP"] == -85
 
 
 @pytest.mark.asyncio
@@ -144,8 +142,7 @@ async def test_cellwan_status_http_error():
         )
 
         async with Client("password") as client:
-            # Method doesn't check status before parsing JSON, raises JSONDecodeError
-            with pytest.raises(json.JSONDecodeError):
+            with pytest.raises(aiohttp.ClientResponseError):
                 await client.cellwan_status()
 
 

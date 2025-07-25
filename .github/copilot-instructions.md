@@ -40,7 +40,7 @@ uv run bin/test
 
 - Make minimal changes to complete tasks fully, without unnecessary complications or premature optimisations
 - Simple is better than complex
-- Only add comments when code is not idiomatic; prefer self-explanatory code
+- Avoid obvious or unhelpful comments; only add comments when code is not idiomatic or when explaining complex logic
 - Tests should verify intended functionality, not implementation specifics
 - Tests should only require updates when features change or new behaviours need regression testing
 

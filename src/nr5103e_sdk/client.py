@@ -54,7 +54,7 @@ class Client:
         self._session: aiohttp.ClientSession | None = None
 
     async def __aenter__(self) -> Self:
-        """Initialize async session."""
+        """Initialise async session."""
         return self
 
     async def __aexit__(
@@ -73,11 +73,7 @@ class Client:
     def session(self) -> aiohttp.ClientSession:
         """Lazy aiohttp session."""
         if self._session is None:
-            # Use ssl=False instead of deprecated verify_ssl parameter
-            if self.verify:
-                connector = aiohttp.TCPConnector()  # Default SSL verification
-            else:
-                connector = aiohttp.TCPConnector(ssl=False)  # Disable SSL verification
+            connector = aiohttp.TCPConnector(ssl=self.verify)
             timeout = aiohttp.ClientTimeout(total=self.timeout)
             self._session = aiohttp.ClientSession(
                 connector=connector,
@@ -117,5 +113,6 @@ class Client:
         """Get info about cell interface status."""
         url = urljoin(self.host, "cgi-bin/DAL?oid=cellwan_status")
         async with self.session.get(url) as response:
+            response.raise_for_status()
             json_data = await response.json()
             return json_data["Object"][0]
