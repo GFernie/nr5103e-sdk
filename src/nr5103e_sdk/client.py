@@ -73,7 +73,11 @@ class Client:
     def session(self) -> aiohttp.ClientSession:
         """Lazy aiohttp session."""
         if self._session is None:
-            connector = aiohttp.TCPConnector(verify_ssl=self.verify)
+            # Use ssl=False instead of deprecated verify_ssl parameter
+            if self.verify:
+                connector = aiohttp.TCPConnector()  # Default SSL verification
+            else:
+                connector = aiohttp.TCPConnector(ssl=False)  # Disable SSL verification
             timeout = aiohttp.ClientTimeout(total=self.timeout)
             self._session = aiohttp.ClientSession(
                 connector=connector,
