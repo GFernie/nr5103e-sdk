@@ -23,7 +23,7 @@ async def test_client_session_lazy():
     client = Client("password")
     async with client:
         # Verify session is None before accessing
-        assert client._session is None  # noqa: SLF001
+        assert client._session is None
         # Access session through public property to ensure lazy initialisation works
         session = client.session
         assert session is not None
@@ -194,7 +194,7 @@ async def test_ssl_verification_disabled():
         # Check that connector has SSL verification disabled
         connector = client.session.connector
         # aiohttp TCPConnector uses _ssl attribute to store SSL context
-        assert connector._ssl is False  # noqa: SLF001
+        assert connector._ssl is False
 
 
 @pytest.mark.asyncio
@@ -206,7 +206,7 @@ async def test_ssl_verification_enabled():
         # Check that connector has SSL verification enabled
         connector = client.session.connector
         # When verify=True, SSL defaults to True (uses default SSL verification)
-        assert connector._ssl is True  # noqa: SLF001
+        assert connector._ssl is True
 
 
 @pytest.mark.asyncio

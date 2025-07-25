@@ -110,7 +110,19 @@ class Client:
             return response.ok
 
     async def cellwan_status(self) -> dict:
-        """Get info about cell interface status."""
+        """Get info about cell interface status.
+
+        Returns:
+            Dictionary containing cell interface status information.
+
+        Raises:
+            aiohttp.ClientError: If there's a network or connection error.
+            aiohttp.ClientResponseError: If the HTTP response indicates an error status.
+            aiohttp.ContentTypeError: If the response is not valid JSON.
+            KeyError: If the expected 'Object' key is not found in the response.
+            IndexError: If the 'Object' array is empty.
+
+        """
         url = urljoin(self.host, "cgi-bin/DAL?oid=cellwan_status")
         async with self.session.get(url) as response:
             response.raise_for_status()
