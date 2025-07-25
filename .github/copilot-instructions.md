@@ -39,6 +39,10 @@ uv run bin/test
 
 ## Code Style and Conventions
 
+### File Formatting
+- **Always add a newline** to the end of all text files (source code, configuration files, documentation, etc.)
+- This ensures proper file formatting and avoids issues with some tools and Git
+
 ### Linting Configuration
 - Uses ruff with "ALL" rules enabled
 - Specific ignores and rules configured in `pyproject.toml`
@@ -98,3 +102,15 @@ uv.lock            # Locked dependency versions (auto-managed)
 - All network operations should be properly handled with appropriate error handling
 - The Client class uses session management - understand the authentication flow
 - Always test with the existing test patterns to maintain consistency
+
+## Documentation Maintenance
+
+### Keeping Documentation Up to Date
+- **Always update** the README.md when adding new features, changing APIs, or modifying project structure
+- **Always update** this copilot-instructions.md file when:
+  - Project structure changes (new directories, moved files, etc.)
+  - New development tools or processes are added
+  - Build/test procedures change
+  - New dependencies or requirements are introduced
+- Update code examples and usage patterns in documentation to reflect current API
+- Ensure all file paths and command references in documentation remain accurate
