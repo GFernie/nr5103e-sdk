@@ -41,9 +41,7 @@ uv run bin/test
 
 ### Linting Configuration
 - Uses ruff with "ALL" rules enabled
-- Specific ignores in `pyproject.toml`:
-  - `COM812`, `D203`, `D213`: Style conflicts
-  - `FIX`, `TD`: TODO/FIXME comments allowed
+- Specific ignores and rules configured in `pyproject.toml`
 - Test files have relaxed rules (see `pyproject.toml`)
 
 ### Type Checking
@@ -60,11 +58,11 @@ uv run bin/test
 ## Project Structure
 
 ```
+.github/workflows/  # CI configuration
+bin/                # Development scripts (format, test)
+pyproject.toml      # Project configuration and dependencies
 src/nr5103e_sdk/    # Main SDK source code
 tests/              # Unit tests
-bin/                # Development scripts (format, test)
-.github/workflows/  # CI configuration
-pyproject.toml      # Project configuration and dependencies
 uv.lock            # Locked dependency versions (auto-managed)
 ```
 
