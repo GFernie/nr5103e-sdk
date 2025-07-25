@@ -7,7 +7,7 @@ This is a Python SDK for interacting with Zyxel NR5103E routers. The SDK handles
 ## Development Environment Setup
 
 ### Prerequisites
-- Python 3.13 (as specified in `.python-version`)
+- Python version as specified in `.python-version`
 - uv package manager
 
 ### Quick Setup
@@ -19,20 +19,18 @@ pip install uv
 uv sync
 
 # Verify setup
-./bin/test
+uv run bin/test
 ```
 
 ## Development Workflow
 
 ### Code Formatting
-- **Always run** `./bin/format` before committing code
+- **Always run** `uv run bin/format` before committing code
 - Uses ruff for both linting fixes and code formatting
-- Command: `ruff check --fix --quiet && ruff format`
 
 ### Testing
-- **Always run** `./bin/test` before committing code
+- **Always run** `uv run bin/test` before committing code
 - Includes: ruff linting, format checking, mypy type checking, and pytest
-- Command sequence: `ruff check && ruff format --diff && mypy . && pytest`
 
 ### Dependencies
 - Use `uv sync` to update dependencies
@@ -83,7 +81,7 @@ uv.lock            # Locked dependency versions (auto-managed)
 1. Implement in appropriate module under `src/nr5103e_sdk/`
 2. Add comprehensive type annotations
 3. Write unit tests in `tests/`
-4. Run `./bin/format` and `./bin/test`
+4. Run `uv run bin/format` and `uv run bin/test`
 5. Ensure all checks pass before committing
 
 ### Adding Dependencies

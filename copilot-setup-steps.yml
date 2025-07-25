@@ -2,12 +2,6 @@ name: CoPilot Setup Steps
 description: Development environment setup for nr5103e-sdk
 
 steps:
-  - name: Setup Python
-    description: Install Python 3.13 as specified in .python-version
-    run: |
-      # Use Python 3.13 as specified in .python-version
-      python --version
-
   - name: Install uv
     description: Install uv package manager for dependency management
     run: |
@@ -18,26 +12,13 @@ steps:
     run: |
       uv sync
 
-  - name: Verify installation
-    description: Verify the development environment is properly set up
-    run: |
-      # Check that all development tools are available
-      uv run ruff --version
-      uv run mypy --version
-      uv run pytest --version
-
   - name: Run tests
     description: Execute the full test suite including linting, formatting, type checking, and unit tests
     run: |
-      ./bin/test
-
-  - name: Run formatter
-    description: Format code using ruff
-    run: |
-      ./bin/format
+      uv run bin/test
 
 environment:
-  python_version: "3.13"
+  python_version_file: ".python-version"
   package_manager: "uv"
-  test_command: "./bin/test"
-  format_command: "./bin/format"
+  test_command: "uv run bin/test"
+  format_command: "uv run bin/format"
