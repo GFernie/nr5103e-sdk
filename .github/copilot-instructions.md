@@ -31,11 +31,18 @@ uv run bin/test
 ### Testing
 - **Always run** `uv run bin/test` before committing code
 - Includes: ruff linting, format checking, mypy type checking, and pytest
+- **Update PR descriptions** with test results, especially after addressing code review feedback
 
 ### Dependencies
 - Use `uv sync` to update dependencies
 - **Never** edit `uv.lock` manually - it's managed by uv
 - Development dependencies are defined in `pyproject.toml` under `[dependency-groups]`
+
+### Communication and Progress Tracking
+- **Keep PR descriptions current** - they are the primary communication tool with reviewers
+- **Update progress frequently** - don't wait until the end to update descriptions
+- **Be transparent** about challenges, changes in approach, or additional scope discovered
+- **Use checklists effectively** - they help track progress and communicate status clearly
 
 ## Code Style and Conventions
 
@@ -80,11 +87,14 @@ uv.lock            # Locked dependency versions (auto-managed)
 ## Common Tasks
 
 ### Adding New Features
-1. Implement in appropriate module under `src/nr5103e_sdk/`
-2. Add comprehensive type annotations
-3. Write unit tests in `tests/`
-4. Run `uv run bin/format` and `uv run bin/test`
-5. Ensure all checks pass before committing
+1. **Create initial PR** with clear description and checklist of planned work
+2. Implement in appropriate module under `src/nr5103e_sdk/`
+3. Add comprehensive type annotations
+4. Write unit tests in `tests/`
+5. **Update PR description** as work progresses - check off completed items
+6. Run `uv run bin/format` and `uv run bin/test`
+7. **Update PR description** with test results and final status
+8. Ensure all checks pass before requesting review
 
 ### Adding Dependencies
 1. Add to `pyproject.toml` under `dependencies` or `[dependency-groups].dev`
@@ -102,6 +112,46 @@ uv.lock            # Locked dependency versions (auto-managed)
 - All network operations should be properly handled with appropriate error handling
 - The Client class uses session management - understand the authentication flow
 - Always test with the existing test patterns to maintain consistency
+
+## Pull Request Management
+
+### PR Description and Progress Tracking
+- **Always update** the PR description throughout the development lifecycle, not just at the initial plan
+- **Update PR descriptions** when:
+  - Completing meaningful units of work (check off completed tasks)
+  - Changing approach or discovering new requirements
+  - Responding to code review feedback
+  - Adding or removing scope from the original plan
+  - Encountering blockers or dependencies
+- **Maintain a clear checklist** in PR descriptions showing:
+  - [x] Completed items with checkmarks
+  - [ ] Remaining work with clear descriptions
+  - Current status and any blockers
+  - Links to related issues or dependencies
+
+### Code Review Response Workflow
+- **When receiving code review feedback:**
+  - Update the PR description to acknowledge the feedback
+  - Add new checklist items for addressing review comments
+  - Update progress as you implement suggested changes
+  - **Always** run `uv run bin/format` and `uv run bin/test` after making changes
+  - Mark review items as completed in the PR description when addressed
+- **Keep reviewers informed** by updating the PR description with:
+  - Summary of changes made in response to feedback
+  - Any questions or clarifications needed
+  - Testing results after implementing changes
+
+### Iterative Development Communication
+- **Throughout development:**
+  - Update PR descriptions to reflect current understanding of the problem
+  - Add context about design decisions or trade-offs discovered
+  - Document any changes to the original scope or approach
+  - Keep the checklist current - add new items as they're discovered
+  - Remove or modify items that are no longer relevant
+- **Before requesting review:**
+  - Ensure PR description accurately reflects all work completed
+  - Include testing evidence and verification steps
+  - Highlight any areas where reviewer input is specifically needed
 
 ## Documentation Maintenance
 
