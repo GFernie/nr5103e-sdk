@@ -21,5 +21,4 @@ jobs:
         with:
           python-version-file: .python-version
       - uses: astral-sh/setup-uv@v6
-      - run: uv sync
       - run: uv run bin/test
