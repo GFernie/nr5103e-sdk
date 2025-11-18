@@ -92,7 +92,7 @@ class Client:
             "SHA512_password": False,
         }
         redacted_body = dict(body)
-        redacted_body["Input_Passwd"] = "***REDACTED***"
+        redacted_body["Input_Passwd"] = "***REDACTED***"  # noqa: S105
         log.debug("Send request to URL %s\nRequest Body: %s", url, redacted_body)
         async with self.session.post(url, json=body) as response:
             if not response.ok:
