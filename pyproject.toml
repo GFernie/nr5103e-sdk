@@ -1,6 +1,6 @@
 [project]
 name = "nr5103e-sdk"
-version = "1.0.0"
+version = "1.0.1"
 description = "SDK for interacting with the Zyxel NR5103E router."
 readme = "README.md"
 authors = [
