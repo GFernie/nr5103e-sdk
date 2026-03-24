@@ -1,6 +1,6 @@
 # NR5103E SDK
 
-A Python SDK for interacting with NR5103E routers. It handles login, sessions, and basic router queries.
+A Python SDK for interacting with Zyxel NR5103E routers. It handles login, sessions, and basic router queries.
 
 ## Quick Start
 
