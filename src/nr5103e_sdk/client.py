@@ -91,7 +91,9 @@ class Client:
             "currLang": "en",
             "SHA512_password": False,
         }
-        log.debug("Send request to URL %s\nRequest Body: %s", url, body)
+        redacted_body = dict(body)
+        redacted_body["Input_Passwd"] = "***REDACTED***"
+        log.debug("Send request to URL %s\nRequest Body: %s", url, redacted_body)
         async with self.session.post(url, json=body) as response:
             if not response.ok:
                 response_text = await response.text()
